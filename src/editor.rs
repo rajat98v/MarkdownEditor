@@ -1,12 +1,11 @@
+use yew::events::KeyboardEvent;
 use yew::prelude::*;
 use yew::services::console::ConsoleService;
-use yew::events::KeyboardEvent;
-use yew::virtual_dom::VComp;
-use yew::virtual_dom::VChild;
 use yew::utils::NodeSeq;
+use yew::virtual_dom::VChild;
+use yew::virtual_dom::VComp;
 
-
-use crate::rawhtml::RawHtml;
+use crate::rawhtml::RawHTML;
 
 pub struct Editor {
     link: ComponentLink<Self>,
@@ -24,20 +23,20 @@ pub enum Msg {
 #[derive(Clone, PartialEq, Properties)]
 pub struct Props {
     #[prop_or_default]
-    pub onsignal: Callback<()>
+    pub onsignal: Callback<()>,
 }
 
 impl Component for Editor {
     type Message = Msg;
     type Properties = Props;
-    
-    fn create( props: Self::Properties, link: ComponentLink<Self>) -> Self {
+
+    fn create(props: Self::Properties, link: ComponentLink<Self>) -> Self {
         Editor {
-            print: String::from("<h1>It is successful</h1>") ,
+            print: String::from("<h1>It is successful</h1>"),
             link,
             onsignal: props.onsignal,
             // text: Vec::new(),
-            text: vec!["Edit Here...".to_string() ; 1],
+            text: vec!["Edit Here...".to_string(); 1],
             last: 0,
         }
     }
@@ -86,11 +85,11 @@ impl Component for Editor {
 }
 
 impl Editor {
-    fn view_line(&self, text : &String) -> Html {
+    fn view_line(&self, text: &String) -> Html {
         ConsoleService::new().log(&format!("updateate: {}", text));
-        html!{
+        html! {
             <div>
-                <RawHtml data=text/>
+                <RawHTML inner_html=text/>
             </div>
         }
     }
